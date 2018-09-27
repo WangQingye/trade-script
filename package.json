@@ -1,0 +1,30 @@
+{
+  "name": "trade",
+  "version": "1.0.0",
+  "description": "trade on okex",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wangqingye",
+  "license": "ISC",
+  "dependencies": {
+    "reconnectingwebsocket": "^1.0.0",
+    "request": "^2.87.0",
+    "socks-proxy-agent": "^4.0.1",
+    "ws": "^6.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WangQingye/trade-script.git"
+  },
+  "keywords": [
+    "okex",
+    "api"
+  ],
+  "bugs": {
+    "url": "https://github.com/WangQingye/trade-script/issues"
+  },
+  "homepage": "https://github.com/WangQingye/trade-script#readme"
+}
