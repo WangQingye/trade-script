@@ -1,6 +1,7 @@
 const WebSocket = require('ws')
 const SocksProxyAgent = require('socks-proxy-agent');
 var agent = new SocksProxyAgent('socks://127.0.0.1:1080');
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')));
 var wsConfig = [{ /* ok季度监听 */
     url: 'wss://real.okex.com:10440/websocket/okexapi',
     msg: "{'event':'addChannel','channel':'ok_sub_futureusd_btc_ticker_quarter'}"
@@ -16,15 +17,6 @@ var wsConfig = [{ /* ok季度监听 */
     msg: JSON.stringify({
         "op": "subscribe",
         "args": ["instrument:XBTUSD"]
-    })
-}, { /* ok个人账户监听 */
-    url: 'wss://real.okex.com:10440/websocket/okexapi',
-    msg: JSON.stringify({
-        "event": "login",
-        "parameters": {
-            "api_key": "03ef88de-991a-4b20-8639-e510260191cb",
-            "sign": "241686CC5C95649E579A910C58220A49"
-        }
     })
 }]
 /* 传入消息处理函数 */
