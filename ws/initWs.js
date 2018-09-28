@@ -1,7 +1,6 @@
 const WebSocket = require('ws')
 const SocksProxyAgent = require('socks-proxy-agent');
 var agent = new SocksProxyAgent('socks://127.0.0.1:1080');
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')));
 var wsConfig = [{ /* ok季度监听 */
     url: 'wss://real.okex.com:10440/websocket/okexapi',
     msg: "{'event':'addChannel','channel':'ok_sub_futureusd_btc_ticker_quarter'}"
