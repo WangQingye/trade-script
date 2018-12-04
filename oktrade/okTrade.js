@@ -2,9 +2,13 @@
 var MD5 = require('./MD5.js');
 var request = require('request');
 const path = require('path');
-var r = request.defaults({
-    proxy: 'http://127.0.0.1:1080'
-})
+/* 服务器上不需要代理，需要代理就加参数 */
+var r = request.defaults({});
+if (process.argv[2]) {
+    r = request.defaults({
+        proxy: 'http://127.0.0.1:1080'
+    })
+}
 var fs = require('fs');
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')));
 console.log(config);

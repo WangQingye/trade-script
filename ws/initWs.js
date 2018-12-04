@@ -44,9 +44,15 @@ exports.initOneWs = function initOneWs(msgFunc, index) {
 }
 
 function initWs(index) {
-    let ws = new WebSocket(wsConfig[index].url, {
-        agent: agent
-    })
+    let ws;
+    /* 服务器上不需要代理 */
+    if (process.argv[2]) {
+        ws = new WebSocket(wsConfig[index].url, {
+            agent: agent
+        })
+    } else {
+        ws = new WebSocket(wsConfig[index].url)
+    }
     ws.onopen = () => {
         console.log(wsConfig[index].url, 'open');
         ws.send(wsConfig[index].msg);
