@@ -1,5 +1,5 @@
 /* OK交易模块 */
-var MD5 = require('./MD5.JS');
+var MD5 = require('./MD5.js');
 var request = require('request');
 const path = require('path');
 var r = request.defaults({
