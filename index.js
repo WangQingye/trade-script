@@ -253,11 +253,13 @@ var bookPrice = 0;
 var bookType = null;
 
 /* 程序开始时检测一次，并且每隔60s检测一下账号的单子状态，防止手动止盈后程序不再次下单 */
-checkAccountBook();
-setInterval(() => {
+/* 如果配置了只打印就不用检查 */
+if(!config.onlyLog){
     checkAccountBook();
-}, 60000)
-
+    setInterval(() => {
+        checkAccountBook();
+    }, 60000)
+};
 function checkLose(nowPrice) {
     /* 差价 */
     let gap = nowPrice - bookPrice;

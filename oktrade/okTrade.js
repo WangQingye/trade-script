@@ -66,6 +66,7 @@ function getAccountNum(cbfunc) {
 // match_price	String	否	是否为对手价 0:不是 1:是 ,当取值为1时,price无效
 // lever_rate	String	否	杠杆倍数，下单时无需传送，系统取用户在页面上设置的杠杆倍数。且“开仓”若有10倍多单，就不能再下20倍多单
 function order(price, amount, type, cbfunc, contractType = 'quarter', symbol = 'btc_usd') {
+    if (config.onlyLog) return; // 如果配置了只是打印log，则不下单
     let time = new Date();
     /* 滑点价格添加 */
     if (type == 1 || type == 4) {
