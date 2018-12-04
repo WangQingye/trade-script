@@ -31,7 +31,7 @@ function getAccountOrder(cbfunc, symbol = "btc_usd", contractType = 'quarter', t
         try {
             data = JSON.parse(body);
         } catch (error) {
-            fs.appendFileSync('./sign.txt', data + "\r\n");
+            utils.addlog('sign', data + "\r\n");
         }
         if (data) cbfunc(data);
     })
@@ -50,7 +50,7 @@ function getAccountNum(cbfunc) {
         try {
             data = JSON.parse(body);
         } catch (error) {
-            fs.appendFileSync('./sign.txt', data + "\r\n");
+            utils.addlog('sign', data + "\r\n");
         }
         if (data) cbfunc(data);
     })
@@ -89,9 +89,9 @@ function order(price, amount, type, cbfunc, contractType = 'quarter', symbol = '
         url: 'https://www.okex.com/api/v1/future_trade.do',
         formData: parma
     }, function (err, res, body) {
-        fs.appendFileSync('./sign.txt', time + 'err:' + err + "\r\n");
-        fs.appendFileSync('./sign.txt', 'res:' + res + "\r\n");
-        fs.appendFileSync('./sign.txt', 'body:' + body + "\r\n");
+        utils.addlog('sign', time + 'err:' + err + "\r\n");
+        utils.addlog('sign', 'res:' + res + "\r\n");
+        utils.addlog('sign', 'body:' + body + "\r\n");
         let data = JSON.parse(body);
         if (data && data.result) {
             sendMsg();

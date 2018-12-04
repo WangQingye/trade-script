@@ -31,7 +31,7 @@ function getboom(index) {
             all+=parseInt(item.amount);
         })
         console.log(all);
-        fs.appendFileSync('./boom.txt', symbol + ":" + all + "\r\n");
+        utils.addlog('boom', symbol + ":" + all + "\r\n");
         setTimeout( ()=> {
             getboom(index+1);
         },2000)

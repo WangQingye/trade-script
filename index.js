@@ -30,7 +30,6 @@ var mexNowPrice = 0;
 function onOkMsg(msg) {
 
     let data = JSON.parse(pako.inflateRaw(msg.data, {to: 'string'}));
-    // fs.appendFileSync('./log/ok.txt', msg.data + '\r\n');
     if (data[0] && data[0].data && data[0].data.last) {
         let time = new Date();
         okPriceArr.push({
@@ -39,8 +38,7 @@ function onOkMsg(msg) {
         })
         console.log('------------------okdata-------------------');
         if (bookAmnout) checkLose(data[0].data.last);
-        // console.log(data[0].data);
-        fs.appendFileSync('./log/ok.txt', utils.formatTime(time) + ':' + data[0].data.last + '\r\n');
+        utils.addlog('ok', utils.formatTime(time) + ':' + data[0].data.last + '\r\n');
     }
 }
 
@@ -55,8 +53,7 @@ function onBitMsg(msg) {
             amount: Math.abs(data[2][2])
         })
         console.log('------------------bitdata-------------------');
-        // console.log(data[2]);
-        fs.appendFileSync('./log/bitfinex.txt', utils.formatTime(time) + ':' + data[2][3] + '\r\n');
+        utils.addlog('bitfinex', utils.formatTime(time) + ':' + data[2][3] + '\r\n');
     }
 }
 
@@ -70,7 +67,7 @@ function onMexMsg(msg) {
         })
         console.log('------------------mexprice-------------------');
         // console.log(data[2]);
-        fs.appendFileSync('./log/bitmex.txt', utils.formatTime(time) + ':' + data.data[0].lastPrice + '\r\n');
+        utils.addlog('bitmex', utils.formatTime(time) + ':' + data.data[0].lastPrice + '\r\n');
     }
 }
 
@@ -158,7 +155,7 @@ function getBitMaxRatio(blockTime) {
     let nowTrades = firstTimeFormat + '-' + lastTimeFormat + ':' + allTradesAmount + '\r\n';
     if (tradesInfo !== nowTrades) {
         tradesInfo = nowTrades;
-        fs.appendFileSync('./log/trades.txt', tradesInfo);
+        utils.addlog('trades', tradesInfo);
     }
     let maxPrice = Math.max(...priceTempArr);
     let minPrice = Math.min(...priceTempArr);
@@ -176,7 +173,7 @@ function getBitMaxRatio(blockTime) {
     // console.log('bitRatio', (bitRatio.toFixed(3) * 100) + '%');
     let logRatio = `${utils.formatTime(new Date())} OKRatio:${okRatio.toFixed(4)}|MEXRatio:${mexRatio.toFixed(4)}|BitRatio:${bitRatio.toFixed(4)}|OKprice:${okNowPrice}|MEXprice:${mexNowPrice}|Bitprice:${bitNowPrice}|Bit/Ok:${Math.abs(bitRatio) / Math.abs(okRatio)}|Bit/Mex:${Math.abs(bitRatio) / Math.abs(mexRatio)} \r\n`;
     // console.log(logRatio);
-    fs.appendFileSync('./log/ratio.txt', logRatio);
+    utils.addlog('ratio', logRatio);
     /* 开单条件 */
     if (Math.abs(bitRatio) > config.percent) {
         // 长周期检测不需要再checkbook，否则会死循环
@@ -195,9 +192,9 @@ function checkBook(logRatio) {
         let book = okRatio > 0 ? 'long' : 'short';
         /* 判断第二级开单条件 */
         if (Math.abs(bitLongRatio) / Math.abs(okLongRatio) > config.spotLongRatioFutures) {
-            fs.appendFileSync('./log/book.txt', `******************************** \r\n`);
-            fs.appendFileSync('./log/book.txt', `open ${book} at ${logRatio} \r\n`);
-            fs.appendFileSync('./log/book.txt', `******************************** \r\n`);
+            utils.addlog('book', `******************************** \r\n`);
+            utils.addlog('book', `open ${book} at ${logRatio} \r\n`);
+            utils.addlog('book', `******************************** \r\n`);
             isBooking = true; // 正在下单
             if (okRatio > 0) {
                 okTrade.openBook(okNowPrice, accountAvailableNum, config.position, 1, (data) => {
@@ -219,10 +216,10 @@ function checkBook(logRatio) {
                 })
             }
         } else {
-            fs.appendFileSync('./log/book.txt', `------------------------------ \r\n`);
-            fs.appendFileSync('./log/book.txt', `open ${book} at ${logRatio} \r\n`);
-            fs.appendFileSync('./log/book.txt', `no open because longRatio: ${Math.abs(bitLongRatio) / Math.abs(okLongRatio)} \r\n`);
-            fs.appendFileSync('./log/book.txt', `------------------------------ \r\n`);
+            utils.addlog('book', `------------------------------ \r\n`);
+            utils.addlog('book', `open ${book} at ${logRatio} \r\n`);
+            utils.addlog('book', `no open because longRatio: ${Math.abs(bitLongRatio) / Math.abs(okLongRatio)} \r\n`);
+            utils.addlog('book', `------------------------------ \r\n`);
         }
     }
 }
