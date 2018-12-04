@@ -16,5 +16,5 @@ exports.addlog = function (name, text) {
         console.log(`mkdir of ./log/${date}`);
         fs.mkdirSync(`./log/${date}`);
     }
-    fs.appendFileSync(`./log/${date}/${name}.txt`, text);
+    fs.appendFileSync(`./log/${date}/eth-${name}.txt`, text);
 }

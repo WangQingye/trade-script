@@ -3,19 +3,19 @@ const SocksProxyAgent = require('socks-proxy-agent');
 var agent = new SocksProxyAgent('socks://127.0.0.1:1080');
 var wsConfig = [{ /* ok季度监听 */
     url: 'wss://real.okex.com:10440/ws/v1',
-    msg: "{'event':'addChannel','channel':'ok_sub_futureusd_btc_ticker_quarter'}"
+    msg: "{'event':'addChannel','channel':'ok_sub_futureusd_eth_ticker_quarter'}"
 }, { /* bitfinex 监听 */
     url: 'wss://api.bitfinex.com/ws/2',
     msg: JSON.stringify({
         "event": "subscribe",
         "channel": "trades",
-        "pair": "tBTCUSD"
+        "pair": "tETHUSD"
     })
 }, { /* bitmex监听 */
     url: 'wss://www.bitmex.com/realtime',
     msg: JSON.stringify({
         "op": "subscribe",
-        "args": ["instrument:XBTUSD"]
+        "args": ["instrument:ETHUSD"]
     })
 }]
 /* 传入消息处理函数 */
