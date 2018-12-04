@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const SocksProxyAgent = require('socks-proxy-agent');
 var agent = new SocksProxyAgent('socks://127.0.0.1:1080');
 var wsConfig = [{ /* ok季度监听 */
-    url: 'wss://real.okex.com:10440/websocket/okexapi',
+    url: 'wss://real.okex.com:10440/ws/v1',
     msg: "{'event':'addChannel','channel':'ok_sub_futureusd_btc_ticker_quarter'}"
 }, { /* bitfinex 监听 */
     url: 'wss://api.bitfinex.com/ws/2',
@@ -34,11 +34,11 @@ exports.initOneWs = function initOneWs(msgFunc, index) {
     /* 防断开重连 */
     ws.onclose = () => {
         console.log('wsclose', index);
-        initOneWs(msgFunc, index);
+        // initOneWs(msgFunc, index);
     }
     ws.onerror = () => {
         console.log('wserror', index);
-        initOneWs(msgFunc, index);
+        // initOneWs(msgFunc, index);
     }
     return ws;
 }

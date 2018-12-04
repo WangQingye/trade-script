@@ -9,6 +9,7 @@
   "author": "wangqingye",
   "license": "ISC",
   "dependencies": {
+    "pako": "^1.0.7",
     "reconnectingwebsocket": "^1.0.0",
     "request": "^2.87.0",
     "socks-proxy-agent": "^4.0.1",

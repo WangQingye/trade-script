@@ -2,6 +2,7 @@ var ws = require('./ws/initWs');
 var okTrade = require('./oktrade/okTrade');
 var utils = require('./utils');
 const fs = require('fs');
+const pako = require('pako');
 const config = JSON.parse(fs.readFileSync("config.json"));
 /* 初始化ws */
 var okws = ws.initOneWs(onOkMsg, 0);
@@ -27,7 +28,8 @@ var mexNowPrice = 0;
 
 /* ---------------- 监听 ---------------------*/
 function onOkMsg(msg) {
-    let data = JSON.parse(msg.data);
+
+    let data = JSON.parse(pako.inflateRaw(msg.data, {to: 'string'}));
     // fs.appendFileSync('./log/ok.txt', msg.data + '\r\n');
     if (data[0] && data[0].data && data[0].data.last) {
         let time = new Date();
