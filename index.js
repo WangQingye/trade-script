@@ -60,14 +60,15 @@ function onBitMsg(msg) {
 function onMexMsg(msg) {
     let data = JSON.parse(msg.data);
     if (data.data && data.data[0] && data.data[0].lastPrice) {
+        let price = data.data[0].lastPrice * 1000; // bitmex以btc计价，位数太小了不方便计算固乘以1000
         let time = new Date();
         mexPriceArr.push({
             time: time.getTime(),
-            price: data.data[0].lastPrice
+            price: price
         })
         console.log('------------------mexprice-------------------');
         // console.log(data[2]);
-        utils.addlog('bitmex', utils.formatTime(time) + ':' + data.data[0].lastPrice + '\r\n');
+        utils.addlog('bitmex', utils.formatTime(time) + ':' + price + '\r\n');
     }
 }
 
