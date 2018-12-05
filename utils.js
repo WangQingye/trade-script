@@ -1,4 +1,9 @@
 const fs = require('fs');
+// 第一次运行如果没有log文件夹，生成一个
+if (!fs.existsSync(`./log`)) {
+    console.log(`mkdir of ./log`);
+    fs.mkdirSync(`./log`);
+}
 function getDate() {
     let date = new Date();
     return date.getMonth() + 1 + '-' + date.getDate();
